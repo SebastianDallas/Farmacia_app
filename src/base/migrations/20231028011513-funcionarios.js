@@ -16,7 +16,7 @@ module.exports = {
 				allowNull: false
 			},
 			bi_number: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false,
 				unique: true
 			},
@@ -36,15 +36,15 @@ module.exports = {
 				allowNull: false
 			},
 			address:  {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			password: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			functions: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			contrat_data: {

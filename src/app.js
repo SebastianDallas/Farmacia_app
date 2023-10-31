@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const categorias = require('./routes/categoria');
 const clientes = require('./routes/cliente');
 const fornecedores = require('./routes/fornecedor');
+const funcionarios = require('./routes/funcionario');
 
 class App {
 	constructor(){
@@ -23,6 +24,7 @@ class App {
 		this.app.use('/categorias', categorias);
 		this.app.use('/clientes', clientes);
 		this.app.use('/fornecedores', fornecedores);
+		this.app.use('/funcionarios', funcionarios);
 	}
 }
 

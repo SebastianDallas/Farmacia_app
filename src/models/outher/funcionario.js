@@ -30,7 +30,7 @@ Funcionario.init({
 		allowNull: false
 	},
 	biNumber: {
-		type: sequelize.INTEGER,
+		type: sequelize.STRING,
 		allowNull: false,
 		unique: true
 	},
@@ -50,15 +50,15 @@ Funcionario.init({
 		allowNull: false
 	},
 	address:  {
-		type: sequelize.INTEGER,
+		type: sequelize.STRING,
 		allowNull: false
 	},
 	password: {
-		type: sequelize.INTEGER,
+		type: sequelize.STRING,
 		allowNull: false
 	},
 	functions: {
-		type: sequelize.INTEGER,
+		type: sequelize.STRING,
 		allowNull: false
 	},
 	contratData: {
@@ -73,7 +73,7 @@ Funcionario.init({
 	updatedAt: sequelize.DATE
 }, {
 	sequelize: db,
-	tableName: 'detalhes_sales',
+	tableName: 'funcionarios',
 	timestamps: true,
 	underscored: true
 });
