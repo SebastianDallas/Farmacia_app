@@ -57,6 +57,19 @@ class Cliente {
 			this.Errors.push(error.parent.sqlMessage);
 		}
 	}
+
+	async showData(){
+		try {
+			return await Clientes.findAll({
+				attributes: ['name','email','phoneNumber','address']
+			});
+		} catch (error) {
+			console.log(error);
+			this.Errors.push('Erro ao buscar os dados dos clientes');
+
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
+		}
+	}
 }
 
 module.exports = Cliente;
