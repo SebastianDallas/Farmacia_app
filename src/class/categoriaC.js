@@ -1,5 +1,6 @@
 const valid = require('validator');
 const Categorias = require('../models/outher/categorias');
+const { ErrorsSql } = require('../shared/Errors');
 
 class Categoria {
 
@@ -46,7 +47,9 @@ class Categoria {
 			return await Categorias.create(data);
 		} catch (error) {
 			this.Errors.push('erro ao salvar dados');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
@@ -57,7 +60,8 @@ class Categoria {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao mostrar os dados');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
@@ -67,7 +71,8 @@ class Categoria {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao trazer dados pesquisados');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
@@ -76,7 +81,8 @@ class Categoria {
 			return await Categorias.update(newObj, {where: oldObj});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 }

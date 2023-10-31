@@ -1,5 +1,7 @@
 const Clientes = require('../models/outher/cliente');
 const validator = require('validator');
+const { ErrorsSql } = require('../shared/Errors');
+const { organizaData } = require('../shared/functionsShared');
 
 class Cliente {
 	constructor(){
@@ -21,6 +23,12 @@ class Cliente {
 				data[key] = data[key].toUpperCase();
 			}
 
+			if (key == 'biNumber') {
+				if(!validator.isLength(data[key], {min: 13, max: 20})) this.Errors.push('bi deve conter no minímo 13 caracteres!!!');
+
+				data[key] = data[key].toUpperCase();
+			}
+
 			if (key == 'email' && data[key]) {
 				if(!validator.isEmail(data[key])) this.Errors.push('formato do email do cliente invalido!!!');
 			}
@@ -34,8 +42,7 @@ class Cliente {
 			}
 		}
 
-		let {name, email,	phoneNumber, address} = data;
-		return {name, email,	phoneNumber, address};
+		return organizaData(data, ['name', 'biNumber', 'email',	'phoneNumber', 'address']);
 	}
 
 	async saveData(obj){
@@ -43,7 +50,8 @@ class Cliente {
 			await Clientes.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao salvar os dados do clientes');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
@@ -54,7 +62,8 @@ class Cliente {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados do clientes');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
@@ -66,7 +75,7 @@ class Cliente {
 		} catch (error) {
 			console.log(error);
 			this.Errors.push('Erro ao buscar os dados dos clientes');
-
+			ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}

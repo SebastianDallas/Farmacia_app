@@ -17,7 +17,8 @@ module.exports = {
 			},
 			bi_number: {
 				type: Sequelize.INTEGER,
-				allowNull: false
+				allowNull: false,
+				unique: true
 			},
 			birthday: {
 				type: Sequelize.DATE,
@@ -31,7 +32,7 @@ module.exports = {
 				}
 			},
 			phone_number: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			address:  {

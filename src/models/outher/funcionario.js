@@ -31,7 +31,8 @@ Funcionario.init({
 	},
 	biNumber: {
 		type: sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		unique: true
 	},
 	birthday: {
 		type: sequelize.DATE,
@@ -45,7 +46,7 @@ Funcionario.init({
 		}
 	},
 	phoneNumber: {
-		type: sequelize.INTEGER,
+		type: sequelize.STRING,
 		allowNull: false
 	},
 	address:  {

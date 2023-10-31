@@ -1,5 +1,7 @@
-const Fornecedores = require('../models/outher/categorias');
+const Fornecedores = require('../models/outher/fornecedor');
 const validator = require('validator');
+const { ErrorsSql } = require('../shared/Errors');
+const { organizaData } = require('../shared/functionsShared');
 
 class Fornecedor {
 	constructor(){
@@ -8,7 +10,7 @@ class Fornecedor {
 	}
 
 	cleanData(body){
-		this.clientes = this.valid(body);
+		this.fornecedores = this.valid(body);
 	}
 
 	valid(data){
@@ -26,7 +28,7 @@ class Fornecedor {
 			}
 
 			if (key == 'phoneNumber') {
-				if(!validator.isLength(data[key], {min:9, max:14}) && !isNaN(data[key])) this.Errors.push('número de telefone do fornecedor Invalido!!!');
+				if(!validator.isLength(data[key], {min:9, max:14}) && isNaN(data[key])) this.Errors.push('número de telefone do fornecedor Invalido!!!');
 			}
 
 			if (key == 'address') {
@@ -34,8 +36,7 @@ class Fornecedor {
 			}
 		}
 
-		let {companyName, email,	phoneNumber, address} = data;
-		return {companyName, email,	phoneNumber, address};
+		return organizaData(data, ['companyName', 'nif', 'email',	'phoneNumber', 'address']);
 	}
 
 	async saveData(obj){
@@ -43,7 +44,8 @@ class Fornecedor {
 			await Fornecedores.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao salvar os dados do Fornecedores');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
@@ -54,19 +56,20 @@ class Fornecedor {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados do Fornecedores');
-			this.Errors.push(error.parent.sqlMessage);
+			ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
 
 	async showData(){
 		try {
 			return await Fornecedores.findAll({
-				attributes: ['name','email','phoneNumber','address']
+				attributes: ['companyName','email','phoneNumber','address']
 			});
 		} catch (error) {
 			console.log(error);
 			this.Errors.push('Erro ao buscar os dados dos Fornecedores');
-
+			ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}

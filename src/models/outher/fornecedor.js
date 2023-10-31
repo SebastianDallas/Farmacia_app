@@ -36,7 +36,7 @@ Fornecedor.init({
 		}
 	},
 	phoneNumber: {
-		type: sequelize.INTEGER,
+		type: sequelize.STRING,
 		allowNull: false
 	},
 	address: sequelize.STRING,
@@ -44,7 +44,7 @@ Fornecedor.init({
 	updatedAt: sequelize.DATE
 }, {
 	sequelize: db,
-	tableName: 'detalhes_sales',
+	tableName: 'fornecedores',
 	timestamps: true,
 	underscored: true
 });

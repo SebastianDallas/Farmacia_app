@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const categorias = require('./routes/categoria');
 const clientes = require('./routes/cliente');
+const fornecedores = require('./routes/fornecedor');
 
 class App {
 	constructor(){
@@ -21,6 +22,7 @@ class App {
 	routes() {
 		this.app.use('/categorias', categorias);
 		this.app.use('/clientes', clientes);
+		this.app.use('/fornecedores', fornecedores);
 	}
 }
 
