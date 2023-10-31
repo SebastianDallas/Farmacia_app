@@ -15,6 +15,10 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
+			nif: {
+				type: Sequelize.STRING,
+				unique: true
+			},
 			email: {
 				type: Sequelize.STRING,
 				allowNull: false,

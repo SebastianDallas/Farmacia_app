@@ -4,6 +4,7 @@ const db = require('../index');
 class Fornecedor extends Model {
 	id;
 	companyName;
+	nif;
 	email;
 	phoneNumber;
 	address;
@@ -22,6 +23,10 @@ Fornecedor.init({
 	companyName: {
 		type: sequelize.STRING,
 		allowNull: false
+	},
+	nif: {
+		type: sequelize.STRING,
+		unique: true
 	},
 	email: {
 		type: sequelize.STRING,

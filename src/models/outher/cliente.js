@@ -4,6 +4,7 @@ const db = require('../index');
 class Cliente extends Model {
 	id;
 	name;
+	biNumber;
 	email;
 	phoneNumber;
 	address;
@@ -22,6 +23,11 @@ Cliente.init({
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false
+	},
+	biNumber: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		unique: true
 	},
 	email: {
 		type: Sequelize.STRING,
