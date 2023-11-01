@@ -26,7 +26,7 @@ Admin.init({
 		type: Sequelize.STRING,
 		allowNull: false,
 	},
-	isAdmin: {
+	is_admin: {
 		type: Sequelize.BOOLEAN,
 		allowNull: false,
 	},
@@ -36,7 +36,6 @@ Admin.init({
 	sequelize: db,
 	tableName: 'other',
 	timestamps: true,
-	underscored: true,
 });
 
 module.exports = Admin;
