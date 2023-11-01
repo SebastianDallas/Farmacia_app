@@ -43,7 +43,7 @@ class Funcionario{
 			if (key == 'birthday' || key == 'contratData') {
 				if(!data[key] && !validator.isLength(data[key], {min: 8, max: 10})) this.Errors.push(`digite uma data valida. ex: 02-10-1999 ${key}!!!`);
 
-				let aux = data[key].split('-' || '.');
+				let aux = data[key].split('-' || '.' || '/');
 				let aux2 = aux.reverse();
 
 				data[key] = aux2.join('-');
@@ -61,8 +61,8 @@ class Funcionario{
 				data[key] = bcrypt.hashSync(data[key], 8);
 			}
 		}
-    
-		return organizaData(data, ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address', 'password', 'functions', 'contratData', 'salary',]);
+
+		return organizaData(data, ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address']);
 	}
 
 	async saveData(obj){
@@ -90,7 +90,7 @@ class Funcionario{
 	async showData(){
 		try {
 			return await Funcionarios.findAll({
-				attributes: ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address', 'password', 'functions', 'contratData', 'salary']
+				attributes: ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address']
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos funcionarios');

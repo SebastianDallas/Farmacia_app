@@ -5,6 +5,7 @@ const Funcionario = require('./funcionario');
 class Login extends Model {
 	id;
 	userId;
+	username;
 	passwConfirm;
 	passwActive;
 	textConfirm;
@@ -29,6 +30,10 @@ Login.init({
 		},
 		onDelete: 'RESTRICT',
 		onUpdate: 'CASCADE'
+	},
+	username: {
+		type: Sequelize.STRING,
+		allowNull: false,
 	},
 	passwConfirm: {
 		type: Sequelize.STRING,

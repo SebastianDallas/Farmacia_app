@@ -9,10 +9,6 @@ class Funcionario extends Model {
 	email;
 	phoneNumber;
 	address;
-	password;
-	functions;
-	contratData;
-	salary;
 	createdAt;
 	updatedAt;
 }
@@ -51,22 +47,6 @@ Funcionario.init({
 	},
 	address:  {
 		type: sequelize.STRING,
-		allowNull: false
-	},
-	password: {
-		type: sequelize.STRING,
-		allowNull: false
-	},
-	functions: {
-		type: sequelize.STRING,
-		allowNull: false
-	},
-	contratData: {
-		type: sequelize.DATE,
-		allowNull: false
-	},
-	salary: {
-		type: sequelize.INTEGER,
 		allowNull: false
 	},
 	createdAt: sequelize.DATE,

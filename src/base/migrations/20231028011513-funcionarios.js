@@ -39,22 +39,6 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			password: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			functions: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			contrat_data: {
-				type: Sequelize.DATE,
-				allowNull: false
-			},
-			salary: {
-				type: Sequelize.INTEGER,
-				allowNull: false
-			},
 			created_at: Sequelize.DATE,
 			updated_at: Sequelize.DATE
 		});

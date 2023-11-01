@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up (queryInterface, Sequelize) {
-		await queryInterface.createTable('login', {
+		await queryInterface.createTable('other', {
 			id: {
 				type: Sequelize.INTEGER,
 				unique: true,
@@ -11,36 +11,24 @@ module.exports = {
 				autoIncrement: true,
 				primaryKey: true
 			},
-			user_id: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-				references: {
-					model: 'funcionarios',
-					key: 'id',
-				},
-				onDelete: 'RESTRICT',
-				onUpdate: 'CASCADE'
-			},
 			username: {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
-			passw_confirm: {
+			passw: {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
-			passw_active: {
-				type: Sequelize.STRING,
+			is_admin: {
+				type: Sequelize.BOOLEAN,
 				allowNull: false,
 			},
-			text_confirm: {
-				type: Sequelize.STRING,
-				allowNull: false,
-			},
+			createdAt: Sequelize.DATE,
+			updatedAt: Sequelize.DATE
 		});
 	},
 
 	async down (queryInterface) {
-		await queryInterface.dropTable('login');
+		await queryInterface.dropTable('other');
 	}
 };
