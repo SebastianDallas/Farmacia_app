@@ -35,6 +35,10 @@ module.exports = {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 			},
+			code_barra: {
+				type: Sequelize.STRING,
+				allowNull: false,
+			},
 			categoria_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,

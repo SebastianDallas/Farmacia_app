@@ -6,10 +6,11 @@ class Produto extends Model {
 	id;
 	name;
 	description;
-	priceInitary;
+	priceUnitary;
 	priceInbulk;
 	currentStock;
 	stockMin;
+	codeBarra;
 	categoriaId;
 	validDate;
 	createdAt;
@@ -48,6 +49,10 @@ Produto.init({
 		type: sequelize.INTEGER,
 		allowNull: false,
 	},
+	codeBarra: {
+		type: sequelize.STRING,
+		allowNull: false,
+	},
 	categoriaId: {
 		type: sequelize.INTEGER,
 		allowNull: false,
@@ -66,12 +71,12 @@ Produto.init({
 	updatedAt: sequelize.DATE
 }, {
 	sequelize: db,
-	tableName: 'categorias',
+	tableName: 'produtos',
 	underscored: true,
 	timestamps: true
 });
 
-Produto.belongsTo(Categoria);
+Produto.belongsTo(Categoria, { foreignKey: 'categoriaId',});
 Categoria.hasMany(Produto);
 
 module.exports = Produto;

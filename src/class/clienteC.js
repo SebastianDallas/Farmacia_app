@@ -73,7 +73,6 @@ class Cliente {
 				attributes: ['name','email','phoneNumber','address']
 			});
 		} catch (error) {
-			console.log(error);
 			this.Errors.push('Erro ao buscar os dados dos clientes');
 			ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);

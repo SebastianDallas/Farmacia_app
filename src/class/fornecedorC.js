@@ -67,7 +67,6 @@ class Fornecedor {
 				attributes: ['companyName','email','phoneNumber','address']
 			});
 		} catch (error) {
-			console.log(error);
 			this.Errors.push('Erro ao buscar os dados dos Fornecedores');
 			ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);

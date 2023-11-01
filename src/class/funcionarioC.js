@@ -61,7 +61,7 @@ class Funcionario{
 				data[key] = bcrypt.hashSync(data[key], 8);
 			}
 		}
-		console.log('dddddddddddddd\n\n', data);
+    
 		return organizaData(data, ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address', 'password', 'functions', 'contratData', 'salary',]);
 	}
 
@@ -69,7 +69,6 @@ class Funcionario{
 		try {
 			await Funcionarios.create(obj);
 		} catch (error) {
-			console.log(error);
 			this.Errors.push('Erro ao salvar os dados do funcionarios');
 			ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
@@ -94,7 +93,6 @@ class Funcionario{
 				attributes: ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address', 'password', 'functions', 'contratData', 'salary']
 			});
 		} catch (error) {
-			console.log(error);
 			this.Errors.push('Erro ao buscar os dados dos funcionarios');
 			ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
