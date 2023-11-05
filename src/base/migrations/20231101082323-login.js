@@ -24,6 +24,7 @@ module.exports = {
 			username: {
 				type: Sequelize.STRING,
 				allowNull: false,
+				unique: true
 			},
 			passw_confirm: {
 				type: Sequelize.STRING,

@@ -1,7 +1,6 @@
 const Fornecedores = require('../models/outher/fornecedor');
 const validator = require('validator');
-const { ErrorsSql } = require('../shared/Errors');
-const { organizaData } = require('../shared/functionsShared');
+const { middleware } = require('../shared');
 
 class Fornecedor {
 	constructor(){
@@ -36,7 +35,7 @@ class Fornecedor {
 			}
 		}
 
-		return organizaData(data, ['companyName', 'nif', 'email',	'phoneNumber', 'address']);
+		return middleware.otherFunc.organizaData(data, ['companyName', 'nif', 'email',	'phoneNumber', 'address']);
 	}
 
 	async saveData(obj){
@@ -44,7 +43,7 @@ class Fornecedor {
 			await Fornecedores.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao salvar os dados do Fornecedores');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -56,7 +55,7 @@ class Fornecedor {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados do Fornecedores');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -68,7 +67,7 @@ class Fornecedor {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos Fornecedores');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}

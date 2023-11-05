@@ -1,7 +1,6 @@
 const Produtos = require('../models/outher/produtos');
 const validator = require('validator');
-const { ErrorsSql } = require('../shared/Errors');
-const { organizaData } = require('../shared/functionsShared');
+const { middleware } = require('../shared');
 const categorias = require('../models/outher/categorias');
 
 class Produto{
@@ -69,7 +68,7 @@ class Produto{
 			}
 		}
 
-		return organizaData(data, ['name','description','priceUnitary','priceInbulk','currentStock','stockMin','codeBarra','categoriaId','validDate']);
+		return middleware.otherFunc.organizaData(data, ['name','description','priceUnitary','priceInbulk','currentStock','stockMin','codeBarra','categoriaId','validDate']);
 	}
 
 	async saveData(obj){
@@ -77,7 +76,7 @@ class Produto{
 			await Produtos.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao salvar os dados do Produto');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -89,7 +88,7 @@ class Produto{
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados do Produto');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -102,7 +101,7 @@ class Produto{
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos Produto');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}

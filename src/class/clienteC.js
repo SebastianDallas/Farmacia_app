@@ -1,7 +1,6 @@
 const Clientes = require('../models/outher/cliente');
 const validator = require('validator');
-const { ErrorsSql } = require('../shared/Errors');
-const { organizaData } = require('../shared/functionsShared');
+const { middleware } = require('../shared');
 
 class Cliente {
 	constructor(){
@@ -42,7 +41,7 @@ class Cliente {
 			}
 		}
 
-		return organizaData(data, ['name', 'biNumber', 'email',	'phoneNumber', 'address']);
+		return middleware.otherFunc.organizaData(data, ['name', 'biNumber', 'email',	'phoneNumber', 'address']);
 	}
 
 	async saveData(obj){
@@ -50,7 +49,7 @@ class Cliente {
 			await Clientes.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao salvar os dados do clientes');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -62,7 +61,7 @@ class Cliente {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados do clientes');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -74,7 +73,7 @@ class Cliente {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos clientes');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}

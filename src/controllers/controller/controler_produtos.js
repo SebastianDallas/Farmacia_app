@@ -1,18 +1,18 @@
 const Produto = require('../../class/produtosC');
 const { StatusCodes } = require('http-status-codes');
-const { Errors_controllers } = require('../../shared/Errors');
+const { middleware } = require('../../shared');
 
 exports.saveData = async (req, res)=>{
 	console.log(req.body);
 	const produto = new Produto();
 	produto.cleanData(req.body);
 
-	if(Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
 
 	console.log('\n\n\n\n',produto.product, '\n\n\n\n\n');
 	await produto.saveData(produto.product);
 
-	if(Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
 
 	return res.status(StatusCodes.CREATED).json({ info: 'produto save with success', data: produto.product });
 
@@ -29,7 +29,7 @@ exports.updateData = async (req, res)=>{
 
 	let response = await produto.updatadData(oldData, newData);
 
-	if(Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
 
 	if(response[0] == 0) return res.status(StatusCodes.BAD_REQUEST).json({info: 'don`t exist this data'});
 
@@ -41,7 +41,7 @@ exports.showAll = async (req, res)=>{
 
 	let response = await produto.showData();
 
-	if(Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
 
 	if(response.length == 0) return res.status(StatusCodes.BAD_REQUEST).json({info: 'don`t exist this data'});
 

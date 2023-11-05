@@ -2,9 +2,8 @@ const { Router } = require('express');
 const { controllers } = require('../controllers/main');
 const route = Router();
 
-route.get('/show',controllers.clientes.showAll);
-// route.get('/showOne',controllers.clientes.showOne);
-route.put('/updated',controllers.clientes.updateData);
-route.post('/save',controllers.clientes.saveData);
+route.post('/',controllers.login.Login);
+route.post('/login/admin',controllers.login.ADMIN);
+// route.put('/register',controllers.login.updateData);
 
 module.exports = route;

@@ -1,7 +1,6 @@
 const LOgin = require('../models/outher/login');
 const validator = require('validator');
-const { ErrorsSql } = require('../shared/Errors');
-const { organizaData } = require('../shared/functionsShared');
+const { middleware } = require('../shared');
 const bcrypt = require('bcrypt');
 
 class Login {
@@ -53,15 +52,15 @@ class Login {
 				data[key] = data[key].toLowerCase();
 			}
 		}
-		return organizaData(data, ['username', 'userId', 'passwConfirm', 'passwActive', 'textConfirm']);
+		return middleware.otherFunc.organizaData(data, ['username', 'userId', 'passwConfirm', 'passwActive', 'textConfirm']);
 	}
 
-	async registerLogin(obj){
+	async Login(obj){
 		try {
 			await LOgin.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao registrar dados de login');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -74,7 +73,20 @@ class Login {
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos login');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
+			if(error.parent) this.Errors.push(error.parent.sqlMessage);
+		}
+	}
+
+
+	async showOneData(obj){
+		try {
+			return await LOgin.findOne({
+				where: obj
+			});
+		} catch (error) {
+			this.Errors.push('Erro ao buscar os dados dos login');
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}

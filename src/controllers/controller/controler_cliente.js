@@ -1,16 +1,16 @@
 const Cliente = require('../../class/clienteC');
 const { StatusCodes } = require('http-status-codes');
-const { Errors_controllers } = require('../../shared/Errors');
+const { middleware } = require('../../shared');
 
 exports.saveData = async (req, res)=>{
 	const client = new Cliente();
 	client.cleanData(req.body);
 
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
 
 	await client.saveData(client.clientes);
 
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
 
 	return res.status(StatusCodes.CREATED).json({ info: 'cliant save with success', data: client.clientes });
 
@@ -27,7 +27,7 @@ exports.updateData = async (req, res)=>{
 
 	let response = await client.updatadData(oldData, newData);
 
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
 
 	if(response[0] == 0) return res.status(StatusCodes.BAD_REQUEST).json({info: 'don`t exist this data'});
 
@@ -39,7 +39,7 @@ exports.showAll = async (req, res)=>{
 
 	let response = await client.showData();
 
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
+	if(middleware.Errors.Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
 
 	if(response.length == 0) return res.status(StatusCodes.BAD_REQUEST).json({info: 'don`t exist this data'});
 

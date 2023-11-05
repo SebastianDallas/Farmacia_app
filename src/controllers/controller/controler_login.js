@@ -1,35 +1,37 @@
-const Cliente = require('../../class/clienteC');
+const Login = require('../../class/loginC');
 const { StatusCodes } = require('http-status-codes');
-const { Errors_controllers } = require('../../shared/Errors');
+const { middleware } = require('../../shared');
+const other = require('../../models/outher/admin');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+exports.ADMIN = async (req, res)=>{
+	const user = new Login();
+	user.cleanData(req.body);
+
+	const Other = await other.findOne({where: {
+		username: user.login.username
+	}});
+
+	if(!Other || !bcrypt.compareSync(user.login.passw, Other.dataValues.passw)) return middleware.Errors.Errors_controllers(res, ['user and password don`t correct'], StatusCodes.CONFLICT);
+
+	const token = jwt.sign({
+		id: Other.dataValues.id,
+		user: Other.dataValues.username,
+		admin: Other.dataValues.is_admin
+	}, process.env.SECRET, {
+		expiresIn: 200
+	});
+
+	return res.status(StatusCodes.CREATED).json({token});
+
+};
 
 exports.Login = async (req, res)=>{
-	const client = new Cliente();
-	client.cleanData(req.body);
-
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
-
-	await client.saveData(client.clientes);
-
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
-
-	return res.status(StatusCodes.CREATED).json({ info: 'cliant save with success', data: client.clientes });
 
 };
 
 exports.Register = async (req, res)=>{
-	const client = new Cliente();
 
-	client.cleanData(req.query);
-	let oldData = client.clientes;
 
-	client.cleanData(req.body);
-	let newData = client.clientes;
-
-	let response = await client.updatadData(oldData, newData);
-
-	if(Errors_controllers(res, client.Errors, StatusCodes.CONFLICT)) return;
-
-	if(response[0] == 0) return res.status(StatusCodes.BAD_REQUEST).json({info: 'don`t exist this data'});
-
-	return res.status(StatusCodes.CREATED).json({ info: 'cliant updated with success' });
 };

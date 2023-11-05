@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const other = require('./shared/middlewares/setAdmin');
+const { middleware } = require('./shared');
 const login = require('./routes/login');
 const categorias = require('./routes/categoria');
 const clientes = require('./routes/cliente');
@@ -21,7 +21,7 @@ class App {
 		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({extended: false}));
-		this.app.use(other.admin);
+		this.app.use(middleware.Other.admin);
 	}
 
 	routes() {

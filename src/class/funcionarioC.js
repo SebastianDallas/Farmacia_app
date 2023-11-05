@@ -1,7 +1,6 @@
 const Funcionarios = require('../models/outher/funcionario');
 const validator = require('validator');
-const { ErrorsSql } = require('../shared/Errors');
-const { organizaData } = require('../shared/functionsShared');
+const { middleware } = require('../shared');
 const bcrypt = require('bcrypt');
 
 class Funcionario{
@@ -62,7 +61,7 @@ class Funcionario{
 			}
 		}
 
-		return organizaData(data, ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address']);
+		return middleware.otherFunc.organizaData(data, ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address']);
 	}
 
 	async saveData(obj){
@@ -70,7 +69,7 @@ class Funcionario{
 			await Funcionarios.create(obj);
 		} catch (error) {
 			this.Errors.push('Erro ao salvar os dados do funcionarios');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -82,7 +81,7 @@ class Funcionario{
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao actualizar os dados do funcionarios');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
@@ -94,7 +93,7 @@ class Funcionario{
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos funcionarios');
-			ErrorsSql(error, this.Errors);
+			middleware.Errors.ErrorsSql(error, this.Errors);
 			if(error.parent) this.Errors.push(error.parent.sqlMessage);
 		}
 	}
