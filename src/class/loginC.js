@@ -1,4 +1,5 @@
 const LOgin = require('../models/outher/login');
+const Funcionario = require('../models/outher/funcionario');
 const validator = require('validator');
 const { middleware } = require('../shared');
 const bcrypt = require('bcrypt');
@@ -29,10 +30,6 @@ class Login {
 
 			if(key == 'passwConfirm'){
 				if(validator.isEmpty(data[key])) this.Errors.push('confirme a senha');
-
-				let salt = bcrypt.genSaltSync(10, 'a');
-
-				data[key] = bcrypt.hash(data[key], salt);
 			}
 
 			if(key == 'passwActive'){
@@ -43,7 +40,7 @@ class Login {
 
 				let salt = bcrypt.genSaltSync(10, 'a');
 
-				data[key] = bcrypt.hash(data[key], salt);
+				data[key] = bcrypt.hashSync(data[key], salt);
 			}
 
 			if(key == 'textConfirm'){
@@ -55,7 +52,7 @@ class Login {
 		return middleware.otherFunc.organizaData(data, ['username', 'userId', 'passwConfirm', 'passwActive', 'textConfirm']);
 	}
 
-	async Login(obj){
+	async Register(obj){
 		try {
 			await LOgin.create(obj);
 		} catch (error) {
@@ -69,7 +66,8 @@ class Login {
 	async showData(){
 		try {
 			return await LOgin.findAll({
-				attributes: ['username', 'userId', 'passwActive', 'textConfirm']
+				include: [{model: Funcionario, attributes: ['fullName', 'biNumber', 'birthday', 'email', 'phoneNumber', 'address']}],
+				attributes: ['username', 'userId', 'passwActive', 'textConfirm'],
 			});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos login');
@@ -81,9 +79,7 @@ class Login {
 
 	async showOneData(obj){
 		try {
-			return await LOgin.findOne({
-				where: obj
-			});
+			return await LOgin.findOne({ where: obj});
 		} catch (error) {
 			this.Errors.push('Erro ao buscar os dados dos login');
 			middleware.Errors.ErrorsSql(error, this.Errors);

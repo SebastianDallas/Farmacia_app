@@ -1,6 +1,6 @@
 let { Sequelize: sequelize, Model } = require('sequelize');
 const db = require('../index');
-
+const Login = require('./login');
 class Funcionario extends Model {
 	id;
 	fullName;
@@ -57,5 +57,8 @@ Funcionario.init({
 	timestamps: true,
 	underscored: true
 });
+
+Login.belongsTo(Funcionario, { foreignKey: 'userId'});
+Funcionario.hasOne(Login, { foreignKey: 'userId'});
 
 module.exports = Funcionario;

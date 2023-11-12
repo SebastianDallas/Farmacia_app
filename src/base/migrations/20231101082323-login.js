@@ -19,7 +19,8 @@ module.exports = {
 					key: 'id',
 				},
 				onDelete: 'RESTRICT',
-				onUpdate: 'CASCADE'
+				onUpdate: 'CASCADE',
+				unique: true
 			},
 			username: {
 				type: Sequelize.STRING,
@@ -38,6 +39,8 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
+			created_at: Sequelize.DATE,
+			updated_at: Sequelize.DATE
 		});
 	},
 

@@ -29,7 +29,8 @@ Login.init({
 			key: 'id',
 		},
 		onDelete: 'RESTRICT',
-		onUpdate: 'CASCADE'
+		onUpdate: 'CASCADE',
+		unique: true
 	},
 	username: {
 		type: Sequelize.STRING,
@@ -55,8 +56,5 @@ Login.init({
 	timestamps: true,
 	underscored: true,
 });
-
-Login.belongsTo(Funcionario, {foreignKey: 'user_id'});
-Funcionario.hasOne(Login);
 
 module.exports = Login;
