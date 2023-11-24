@@ -65,7 +65,7 @@ Venda_produto.init({
 	updatedAt: Sequelize.DATE
 }, {
 	sequelize: db,
-	modelName: 'stock',
+	modelName: 'venda_produtos',
 	underscored: true,
 	timestamps: true
 });

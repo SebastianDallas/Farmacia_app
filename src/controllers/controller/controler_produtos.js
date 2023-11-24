@@ -3,13 +3,11 @@ const { StatusCodes } = require('http-status-codes');
 const { middleware } = require('../../shared');
 
 exports.saveData = async (req, res)=>{
-	console.log(req.body);
 	const produto = new Produto();
 	produto.cleanData(req.body);
 
 	if(middleware.Errors.Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
 
-	console.log('\n\n\n\n',produto.product, '\n\n\n\n\n');
 	await produto.saveData(produto.product);
 
 	if(middleware.Errors.Errors_controllers(res, produto.Errors, StatusCodes.CONFLICT)) return;
